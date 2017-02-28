@@ -13,7 +13,7 @@ make_filename(year)
 This function returns a \code{string} of the form: "accident_YYYY.csv.bz2".
 }
 \description{
-This function produces a filename which follows the conventions of 
+This function produces a filename which follows the conventions of
 FARS (Federal Accident Reports) naming including the supplied \code{year} argument.
 }
 \examples{

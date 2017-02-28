@@ -17,7 +17,7 @@ This function reads a (possibly compressed) .csv format file specified by the \c
 \code{tbl_df data.frame}.
 }
 \details{
-The function will fail if the file specified by the \code{filename} argument does not exist. 
+The function will fail if the file specified by the \code{filename} argument does not exist.
 The \code{read_csv} function may fail if the file is not readable. Any warnings introduced by parsing failures are suppressed.
 
 The following functions are imported: \code{readr::read_csv}, \code{dplr::tbl_df}.

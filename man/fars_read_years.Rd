@@ -2,7 +2,7 @@
 % Please edit documentation in R/fars_functions.R
 \name{fars_read_years}
 \alias{fars_read_years}
-\title{Read multiple FARS data files for the specified years.}
+\title{Read multiple FARS data files, retaining only the month and year of accident reports}
 \usage{
 fars_read_years(years)
 }
@@ -10,15 +10,15 @@ fars_read_years(years)
 \item{years}{A list of 4-digit year numbers (YYYY) specifying the FARS files to be read.}
 }
 \value{
-This function returns a \code{list} of \code{data.frame}s, one per year, 
+This function returns a \code{list} of \code{data.frame}s, one per year,
 in which each observation reflects the month and year of an accident report.
 }
 \description{
-This function reads the FARS file for each of the years in the \code{years} list argument, 
+This function reads the FARS file for each of the years in the \code{years} list argument,
 retaining only the \code{MONTH} and \code{year} of the FARS reports in a list containing one \code{data.frame} per year.
 }
 \details{
-The function will produce a warning and skip the year if there is no FARS data file, 
+The function will produce a warning and skip the year if there is no FARS data file,
 or the data file cannot be read, for any of the given years.
 
 The following functions are imported: \code{dplr::mutate, dplr::select}.

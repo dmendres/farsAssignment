@@ -15,11 +15,11 @@ fars_map_state(state.num, year)
 The function returns a NULL value.
 }
 \description{
-This function produces a plot of the accident reports of a given year 
-and in a given state on a map of the specified state.
+This function plots the accident reports of a given year
+and in a given state on a map of the state.
 }
 \details{
-The function will fail if the state code is not in FARS file. 
+The function will fail if the state code is not in FARS file.
 If there are no accidents to plot, a message is produced to that effect.
 
 The following functions are imported: \code{maps::map}, \code{graphics::points}, \code{dply::filter}.
@@ -27,6 +27,6 @@ The following functions are imported: \code{maps::map}, \code{graphics::points},
 \examples{
 fars_map_state(1, 2014)
 # following will fail
-fars_map_state(1, 2017) 
+fars_map_state(1, 2019)
 
 }

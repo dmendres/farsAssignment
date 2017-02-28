@@ -10,12 +10,12 @@ fars_summarize_years(years)
 \item{years}{A list of 4-digit year numbers (YYYY) specifying the FARS files to be read.}
 }
 \value{
-This function returns a \code{data.frame} of 12 observations, one each month, 
+This function returns a \code{data.frame} of 12 observations, one each month,
 of the number FARS reports in the specified years.
 }
 \description{
-This function produces a summary \code{data.frame} containing the number of reports 
-by month for the FARS files corresponding to each year in the \code{years} list
+This function produces a summary \code{data.frame} containing the number of reports
+by month for the FARS files corresponding to each year in the \code{years} list.
 }
 \details{
 Missing years will be skipped with a warning.
