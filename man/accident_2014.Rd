@@ -7,7 +7,7 @@
 \format{A file in  \code{".csv"} format.}
 \source{
 \href{https://d18ky98rnyall9.cloudfront.net/_e1adac2a5f05192dc8780f3944feec13_fars_data.zip?Expires=1488412800&Signature=EW0XhEUwrkXBPqr656sNUUjxVhmMw9Q9e2AzSjs-7VWGI0ldsENuRITn03NIn3nouhDEoQWacZqyXIvgxNzs2TDO1imSP04k-DEA~UuvY6u97PM1xQSOvSwZXe62fyOefCebkDK4-akm6e3yz3iWsN62phig4aNgmtqjjDX4m8g_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A}{Course data}
-as documented in \href{http://www.nhtsa.gov/Data/Fatality-Analysis-Reporting-System-(FARS)}{Fatality Analysis Reporting System}
+as documented in \href{https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars}{Fatality Analysis Reporting System}
 }
 \usage{
 accident_2014
