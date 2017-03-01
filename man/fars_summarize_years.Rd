@@ -23,10 +23,11 @@ Missing years will be skipped with a warning.
 The following functions are imported: \code{dplr::bind_rows, dplr::group_by, dply::summarize}, and \code{tidyr::spread}
 }
 \examples{
+
 fars_summarize_years(list(2013, 2014, 2015))
 # will produce a warning
-fars_summarize_years(list(2013,2016))
+#fars_summarize_years(list(2013,2016))
 # will fail
-fars_summarize_years(1999)
+#not run, will fail: fars_summarize_years(1999)
 
 }

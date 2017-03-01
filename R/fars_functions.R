@@ -1,3 +1,8 @@
+require(dplyr)
+require(tidyr)
+require(readr)
+require(maps)
+
 #' Read a FARS Data File
 #'
 #' This function reads a (possibly compressed) .csv format file specified by the \code{filename} argument and returns it as a
@@ -14,18 +19,19 @@
 #'
 #' @examples
 #' #improper name format
-#' fars_read("fars.csv")
+#' #not run, fails fars_read("fars.csv")
 #'
 #' fars_read("accident_2014.csv.bz2")
 #'
-#'
 #' @importFrom readr read_csv
-#' @importFrom dplr tbl_df
 #'
 #' @export
 fars_read <- function(filename) {
-        if(!file.exists(filename))
+        if(!file.exists(filename)) {
+          filename = paste0("farsAssignment/data/",filename)
+          if (!file.exists(filename))
                 stop("file '", filename, "' does not exist")
+        }
         data <- suppressMessages({
                 readr::read_csv(filename, progress = FALSE)
         })
@@ -71,16 +77,16 @@ make_filename <- function(year) {
 #'
 #' fars_read_years(list(2013,2014))
 #'
-#' @importFrom dplr mutate
-#' @importFrom dplr select
+#' @import dplyr
+#'
 #' @export
 fars_read_years <- function(years) {
         lapply(years, function(year) {
                 file <- make_filename(year)
                 tryCatch({
                         dat <- fars_read(file)
-                        dplyr::mutate(dat, year = year) %>%
-                                dplyr::select(MONTH, year)
+                        dplyr::mutate_(dat, 'year' = year) %>%
+                                dplyr::select_('MONTH', 'year')
                 }, error = function(e) {
                         warning("invalid year: ", year)
                         return(NULL)
@@ -103,24 +109,22 @@ fars_read_years <- function(years) {
 #' The following functions are imported: \code{dplr::bind_rows, dplr::group_by, dply::summarize}, and \code{tidyr::spread}
 #'
 #' @examples
+#'
 #' fars_summarize_years(list(2013, 2014, 2015))
 #' # will produce a warning
-#' fars_summarize_years(list(2013,2016))
+#' #fars_summarize_years(list(2013,2016))
 #' # will fail
-#' fars_summarize_years(1999)
+#' #not run, will fail: fars_summarize_years(1999)
 #'
-#' @importFrom dplr bind_rows
-#' @importFrom dplr group_by
-#' @importFrom dply summarize
-#' @importFrom tidyr spread
+#' @import dplyr tidyr
 #'
 #' @export
 fars_summarize_years <- function(years) {
         dat_list <- fars_read_years(years)
         dplyr::bind_rows(dat_list) %>%
-                dplyr::group_by(year, MONTH) %>%
-                dplyr::summarize(n = n()) %>%
-                tidyr::spread(year, n)
+                dplyr::group_by_('year', 'MONTH') %>%
+                dplyr::summarize_('n' = 'n()') %>%
+                tidyr::spread_('year', 'n')
 }
 
 #' Plot the location of fars accident reports
@@ -141,11 +145,9 @@ fars_summarize_years <- function(years) {
 #' @examples
 #' fars_map_state(1, 2014)
 #' # following will fail
-#' fars_map_state(1, 2019)
+#' #not run, will fail: fars_map_state(1, 2019)
 #'
-#' @importFrom maps map
-#' @importFrom graphics points
-#' @importFrom dply filter
+#' @import maps graphics
 #'
 #' @export
 fars_map_state <- function(state.num, year) {
@@ -155,7 +157,7 @@ fars_map_state <- function(state.num, year) {
 
         if(!(state.num %in% unique(data$STATE)))
                 stop("invalid STATE number: ", state.num)
-        data.sub <- dplyr::filter(data, STATE == state.num)
+        data.sub <- dplyr::filter(data,  'STATE' == state.num)
         if(nrow(data.sub) == 0L) {
                 message("no accidents to plot")
                 return(invisible(NULL))
@@ -163,8 +165,8 @@ fars_map_state <- function(state.num, year) {
         is.na(data.sub$LONGITUD) <- data.sub$LONGITUD > 900
         is.na(data.sub$LATITUDE) <- data.sub$LATITUDE > 90
         with(data.sub, {
-                maps::map("state", ylim = range(LATITUDE, na.rm = TRUE),
-                          xlim = range(LONGITUD, na.rm = TRUE))
-                graphics::points(LONGITUD, LATITUDE, pch = 46)
+                maps::map("state", ylim = range(~LATITUDE, na.rm = TRUE),
+                          xlim = range(~LONGITUD, na.rm = TRUE))
+                graphics::points(~LONGITUD, ~LATITUDE, pch = 46)
         })
 }

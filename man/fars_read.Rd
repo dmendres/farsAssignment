@@ -24,9 +24,8 @@ The following functions are imported: \code{readr::read_csv}, \code{dplr::tbl_df
 }
 \examples{
 #improper name format
-fars_read("fars.csv")
+#not run, fails fars_read("fars.csv")
 
 fars_read("accident_2014.csv.bz2")
-
 
 }

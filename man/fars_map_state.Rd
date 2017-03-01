@@ -27,6 +27,6 @@ The following functions are imported: \code{maps::map}, \code{graphics::points},
 \examples{
 fars_map_state(1, 2014)
 # following will fail
-fars_map_state(1, 2019)
+#not run, will fail: fars_map_state(1, 2019)
 
 }
