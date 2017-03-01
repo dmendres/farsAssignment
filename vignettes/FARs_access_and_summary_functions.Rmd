@@ -9,50 +9,51 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+This is the vignette for the 'farsAssignment' package. 
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+The FARS (Fatality Accident Reporting System) data collected by the NTSE provides records fatal accident reports for a given year. The tools in this package enable reading, summarizing and plotting the FARs data for one or several years. The package also includes three years of FARS data.
 
-## Vignette Info
+## FARS data
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+Each of the FARS data files is in "comma separated value" format. Any of these data sets can be loaded with fars_read() as a data.frame (actually, a tbl_df). The data sets available in this package are:
 
-## Styles
+* accident_2013.csv.bz2
+* accident_2014.csv.bz2
+* accident_2015.csv.bz2
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+The NHTSA Fatality Analysis Reporting System data is described [here](https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars)
+The data contains 50 variables with column names as below:
+```{r, cache=TRUE}
+setwd("..")
+source("R/fars_functions.R")
+setwd("..")
+farsDF2014 <- fars_read(make_filename(2014))
+colnames(farsDF2014)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+## FARS functions
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+* make_filename(year) will generate a file name in the appropriate format (e.g. "accident_[year].csv.bz2"")
+* fars_read(filename) will return a tbl_df data.frame of the observations for the given year
+* fars_read_years(filenames) will return a list of tbl_df data.frames with only the month and year retained for each fatality report
+* fars_summarize_years will report, by year and month, the number of reports. 
+* fars_map_state(state.code, year) wil plot the accident report locations for a give state.code.
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+## FARS functions examples
 
-## More Examples
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+* make_filename(2014)
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
+* fars_read("accident_2014.csv.bz2")
 
-Also a quote using `>`:
+* fars_read_years(list(2013,2014))
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+* fars_summarize_years(list(2013, 2014, 2015))
+
+* fars_map_state(1, 2014)
+
+
+
+
+
+
